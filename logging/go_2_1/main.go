@@ -7,14 +7,14 @@ import (
 )
 
 type Logger struct {
-	OutputText bool
-	Output     io.Writer
+	Output io.Writer
 }
 
 func (receiver Logger) Log(a ...interface{}) {
-	if receiver.OutputText {
-		fmt.Fprintln(receiver.Output, a...)
+	if receiver.Output == nil {
+		return
 	}
+	fmt.Fprintln(receiver.Output, a...)
 }
 
 func (receiver Logger) Begin(a ...interface{}) {
@@ -27,8 +27,7 @@ func (receiver Logger) End(a ...interface{}) {
 
 func main() {
 	log := Logger{
-		OutputText: true,
-		Output:     os.Stdout,
+		Output: os.Stdout,
 	}
 
 	log.Begin()
