@@ -1,0 +1,4 @@
+github.com/mmcomp/go_log v0.0.0-20210629122541-1236b7455dae h1:GPd7RTt0Wa32ECubthHo+cD1Lb5tbL4+JBZ0Gkjw/+w=
+github.com/mmcomp/go_log v0.0.0-20210629122541-1236b7455dae/go.mod h1:CMnBq1JQCDNaq/D6KdX6aosC227PAg6KhAOTaf3bACo=
+github.com/mmcomp/go_log v0.0.0-20210629122927-c6c950a17426 h1:Za0CR1O3QiYPVzE/tqm8FZHqLmfPBLomzeKKGhfTveI=
+github.com/mmcomp/go_log v0.0.0-20210629122927-c6c950a17426/go.mod h1:CMnBq1JQCDNaq/D6KdX6aosC227PAg6KhAOTaf3bACo=
