@@ -2,16 +2,13 @@ package flags
 
 import (
 	"flag"
-	"fmt"
 )
 
+var Name string
+var Shhh bool
+
 func Handle() {
-	var name string
-	var shhh bool
-	flag.StringVar(&name, "name", "NoName", "It is your name!")
-	flag.BoolVar(&shhh, "shhh", false, "It is used to SHHH the output!")
+	flag.StringVar(&Name, "name", "NoName", "It is your name!")
+	flag.BoolVar(&Shhh, "shhh", false, "It is used to SHHH the output!")
 	flag.Parse()
-	if !shhh {
-		fmt.Printf("Hello %s\n", name)
-	}
 }
