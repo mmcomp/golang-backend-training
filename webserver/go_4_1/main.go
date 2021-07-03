@@ -8,7 +8,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello world %s", r.URL.Query())
+	fmt.Fprint(w, "Hello world")
 	go_log.Log("New Req")
 }
 
