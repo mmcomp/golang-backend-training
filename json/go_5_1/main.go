@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"encoding/json"
 
-	"github.com/mmcomp/go_log"
+	go_log "github.com/mmcomp/go-log"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
