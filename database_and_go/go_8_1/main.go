@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	connector, err := pq.NewConnector("user=mehrdad password=123456 dbname=mehrdad")
+	connector, err := pq.NewConnector("user=mehrdad password=123456 dbname=mehrdad sslmode=disable")
 	if err != nil {
 		go_log.Logf("Error Connector : %s", err.Error())
 		return
