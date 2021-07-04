@@ -3,39 +3,29 @@ package main
 import (
 	"database/sql"
 
-	_ "github.com/lib/pq"
+	"github.com/lib/pq"
 	go_log "github.com/mmcomp/go-log"
 )
 
 func main() {
-	db, err := sql.Open("postgres",
-		"mehrdad@localhost:3306/mehrdad")
+	connector, err := pq.NewConnector("user=mehrdad password=123456 dbname=mehrdad")
 	if err != nil {
-		go_log.Log(err)
+		go_log.Logf("Error Connector : %s", err.Error())
+		return
 	}
-
-	// var (
-	// 	id           int
-	// 	name         string
-	// 	email        string
-	// 	when_created string
-	// )
-	rows, err := db.Query("select id, name, email, when_created from accounts")
+	db := sql.OpenDB(connector)
+	rows, err := db.Query("select * from accounts")
 	if err != nil {
-		go_log.Log("Query Error", err)
+		go_log.Logf("Error Query : %s", err.Error())
+		return
 	}
-	defer rows.Close()
-	// for rows.Next() {
-	// 	err := rows.Scan(&id, &name, &email, &when_created)
-	// 	if err != nil {
-	// 		go_log.Log(err)
-	// 	}
-	// 	go_log.Log(id, name, email, when_created)
-	// }
-	// err = rows.Err()
-	// if err != nil {
-	// 	go_log.Log(err)
-	// }
-
+	var id int64
+	var name string
+	var email string
+	var when_created string
+	for rows.Next() {
+		rows.Scan(&id, &name, &email, &when_created)
+		go_log.Logf("id = %d, name = %q, email = %q, when_created = %q", id, name, email, when_created)
+	}
 	defer db.Close()
 }
