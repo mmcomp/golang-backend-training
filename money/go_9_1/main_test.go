@@ -251,3 +251,98 @@ func TestCAD_CanonicalForm(t *testing.T) {
 		}
 	}
 }
+
+
+func TestCAD_Mul(t *testing.T) {
+	tests := []struct{
+		Input CAD
+		Scalar int64
+		Expected CAD
+	} {
+		{
+			Input: CAD{
+				cents: 1,
+			},
+			Scalar: 2,
+			Expected: CAD{
+				cents: 2,
+			},
+		},
+		{
+			Input: CAD{
+				cents: -7,
+			},
+			Scalar: 2,
+			Expected: CAD{
+				cents: -14,
+			},
+		},
+		{
+			Input: CAD{
+				cents: 0,
+			},
+			Scalar: 2,
+			Expected: CAD{
+				cents: 0,
+			},
+		},
+	}
+
+
+	for testNumber, test := range tests {
+		cad := test.Input.Mul(test.Scalar)
+		if cad != test.Expected {
+			t.Errorf("Test %d :  output is %d  but was expecting %d", testNumber, cad, test.Expected)
+		}
+	}
+}
+
+func TestCAD_Sub(t *testing.T) {
+	tests := []struct{
+		Input CAD
+		Sub CAD
+		Expected CAD
+	} {
+		{
+			Input: CAD{
+				cents: 5,
+			},
+			Sub: CAD{
+				cents: 2,
+			},
+			Expected: CAD{
+				cents: 3,
+			},
+		},
+		{
+			Input: CAD{
+				cents: -7,
+			},
+			Sub: CAD{
+				cents: 2,
+			},
+			Expected: CAD{
+				cents: -9,
+			},
+		},
+		{
+			Input: CAD{
+				cents: 0,
+			},
+			Sub: CAD{
+				cents: 2,
+			},
+			Expected: CAD{
+				cents: -2,
+			},
+		},
+	}
+
+
+	for testNumber, test := range tests {
+		cad := test.Input.Sub(test.Sub)
+		if cad != test.Expected {
+			t.Errorf("Test %d :  output is %d  but was expecting %d", testNumber, cad, test.Expected)
+		}
+	}
+}
