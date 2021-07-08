@@ -15,8 +15,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	go_log.Begin("BEGIN")
-	defer go_log.End("END")
+	go_log.Begin()
+	defer go_log.End()
 	query := r.URL.Query()
 	name := query.Get("name")
 	if name == "" {
@@ -29,8 +29,8 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	go_log.Begin("BEGIN")
-	defer go_log.End("END")
+	go_log.Begin()
+	defer go_log.End()
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/hello", helloHandler)
 	err := http.ListenAndServe(":8080", nil)
