@@ -8,15 +8,15 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	go_log.OutputFn("BEGIN")
-	defer go_log.OutputFn("END")
+	go_log.Begin("BEGIN")
+	defer go_log.End("END")
 	fmt.Fprint(w, "Hello world")
 	go_log.Log("New Req")
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	go_log.OutputFn("BEGIN")
-	defer go_log.OutputFn("END")
+	go_log.Begin("BEGIN")
+	defer go_log.End("END")
 	query := r.URL.Query()
 	name := query.Get("name")
 	if name == "" {
@@ -25,12 +25,12 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprintf(w, "Hello %s", name)
-	go_log.Logf("New Req to hello name = %q", name)
+	go_log.Highlightf("New Req to hello name = %q", name)
 }
 
 func main() {
-	go_log.OutputFn("BEGIN")
-	defer go_log.OutputFn("END")
+	go_log.Begin("BEGIN")
+	defer go_log.End("END")
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/hello", helloHandler)
 	err := http.ListenAndServe(":8080", nil)
