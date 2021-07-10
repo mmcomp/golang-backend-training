@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"database/sql/driver"
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -134,10 +135,26 @@ func (receiver CAD) Value() (driver.Value, error) {
 	return receiver.cents, nil
 }
 
+func (receiver *CAD) Scan(src interface{}) error {
+	var err error
+	switch src.(type) {
+	case string:
+		*receiver, err = ParseCAD(src.(string))
+		if err != nil {
+			return err
+		}
+		return nil
+	case int64:
+		receiver.cents = src.(int64)
+		return nil
+	}
+	return errors.New("Incompatible type for CAD!")
+}
+
 func main() {
 	connector, err := pq.NewConnector("user=mehrdad password=123456 dbname=mehrdad sslmode=disable")
 	if err != nil {
-		go_log.Logf("Error Connector : %s", err.Error())
+		go_log.Errorf("Error Connector : %s", err.Error())
 		return
 	}
 	db := sql.OpenDB(connector)
@@ -147,6 +164,20 @@ func main() {
 	var name string = "test"
 	var id int64
 	db.QueryRow("insert into money (name, cents) values ($1, $2)", name, money).Scan(&id)
+
+	rows, err := db.Query("select * from money")
+	if err != nil {
+		go_log.Errorf("Error Query : %s", err.Error())
+		return
+	}
+	var selectedId int64
+	var selectedName string
+	var selectedCad CAD
+	var when_created string
+	for rows.Next() {
+		rows.Scan(&selectedId, &selectedName, &selectedCad, &when_created)
+		go_log.Alertf("id = %d, name = %q, money = %q, when_created = %q", selectedId, selectedName, selectedCad, when_created)
+	}
 
 	defer db.Close()
 }
