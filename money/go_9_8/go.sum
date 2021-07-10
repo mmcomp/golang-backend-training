@@ -1,0 +1,4 @@
+github.com/lib/pq v1.10.2 h1:AqzbZs4ZoCBp+GtejcpCpcxM3zlSMx29dXbUSeVtJb8=
+github.com/lib/pq v1.10.2/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=
+github.com/mmcomp/go-log v0.0.0-20210706013848-a6874dd640b9 h1:fLfiRjDIZum1bZxpsFYK2MphGsMO2GAAacxXq4d0I+g=
+github.com/mmcomp/go-log v0.0.0-20210706013848-a6874dd640b9/go.mod h1:i8FWyCykjMADh+wE8ZDh56AJmRh2Sx7nHfsJs+39bzc=
