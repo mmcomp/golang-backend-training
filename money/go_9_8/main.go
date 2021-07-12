@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"database/sql/driver"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strconv"
@@ -75,42 +76,23 @@ func (receiver CAD) Sub(other CAD) CAD {
 }
 
 func (receiver CAD) GoString() string {
-	var sign int8 = 1
-	if receiver.cents < 0 {
-		sign = -1
-	}
-	receiver = receiver.Abs()
-	dollars, cents := receiver.CanonicalForm()
-	var centsStr string = fmt.Sprintf("%d", cents)
-	if cents < 10 {
-		centsStr = "0" + centsStr
-	}
-	result := fmt.Sprintf("$%d.%s", dollars, centsStr)
-	if sign < 0 {
-		result = "-" + result
-	}
+	result := fmt.Sprintf("main.cents(%d)", receiver.cents)
 	return result
 }
 
 func (receiver CAD) MarshalJSON() ([]byte, error) {
-	jsonString := fmt.Sprintf("{\"cents\":%d}", receiver.cents)
-	result := []byte(jsonString)
-	return result, nil
+	result := receiver.String()
+	return []byte(result), nil
 }
 
 func (receiver *CAD) UnmarshalJSON(b []byte) error {
-	s := string(b)
-	s = strings.Replace(s, " ", "", -1)
-	s = strings.Replace(s, "\"", "", -1)
-	s = strings.Replace(s, "{", "", -1)
-	s = strings.Replace(s, "}", "", -1)
-	s = strings.Replace(s, ":", "", -1)
-	s = strings.Replace(s, "cents", "", -1)
-	intValue, err := strconv.ParseInt(s, 10, 64)
-	if err == nil {
-		receiver.cents = intValue
+	var cents int64
+	err := json.Unmarshal(b, &cents)
+	if err != nil {
+		return err
 	}
-	return err
+	receiver.cents = cents
+	return nil
 }
 
 func (receiver CAD) String() string {
@@ -132,23 +114,29 @@ func (receiver CAD) String() string {
 }
 
 func (receiver CAD) Value() (driver.Value, error) {
-	return receiver.cents, nil
+	return receiver.String(), nil
 }
 
 func (receiver *CAD) Scan(src interface{}) error {
 	var err error
-	switch src.(type) {
+	switch casted := src.(type) {
 	case string:
-		*receiver, err = ParseCAD(src.(string))
+		*receiver, err = ParseCAD(casted)
+		if err != nil {
+			return err
+		}
+		return nil
+	case []byte:
+		*receiver, err = ParseCAD(string(casted))
 		if err != nil {
 			return err
 		}
 		return nil
 	case int64:
-		receiver.cents = src.(int64)
+		receiver.cents = casted
 		return nil
 	}
-	return errors.New("Incompatible type for CAD!")
+	return errors.New("incompatible type for CAD")
 }
 
 func main() {
