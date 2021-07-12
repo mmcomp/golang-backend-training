@@ -357,25 +357,25 @@ func TestCAD_GoString(t *testing.T) {
 			Input: CAD{
 				cents: 1,
 			},
-			Expected: "$0.01",
+			Expected: "main.cents(1)",
 		},
 		{
 			Input: CAD{
 				cents: -7,
 			},
-			Expected: "-$0.07",
+			Expected: "main.cents(-7)",
 		},
 		{
 			Input: CAD{
 				cents: 0,
 			},
-			Expected: "$0.00",
+			Expected: "main.cents(0)",
 		},
 		{
 			Input: CAD{
 				cents: 1785,
 			},
-			Expected: "$17.85",
+			Expected: "main.cents(1785)",
 		},
 	}
 
