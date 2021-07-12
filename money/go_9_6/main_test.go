@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"testing"
 )
@@ -351,25 +350,25 @@ func TestCAD_GoString(t *testing.T) {
 			Input: CAD{
 				cents: 1,
 			},
-			Expected: "$0.01",
+			Expected: "main.cents(1)",
 		},
 		{
 			Input: CAD{
 				cents: -7,
 			},
-			Expected: "-$0.07",
+			Expected: "main.cents(-7)",
 		},
 		{
 			Input: CAD{
 				cents: 0,
 			},
-			Expected: "$0.00",
+			Expected: "main.cents(0)",
 		},
 		{
 			Input: CAD{
 				cents: 1785,
 			},
-			Expected: "$17.85",
+			Expected: "main.cents(1785)",
 		},
 	}
 
@@ -380,7 +379,6 @@ func TestCAD_GoString(t *testing.T) {
 		if out != test.Expected {
 			t.Errorf("Test %d :  output is %s  but was expecting %s", testNumber, out, test.Expected)
 		}
-		b.Reset()
 	}
 }
 
@@ -426,7 +424,7 @@ func TestCAD_Stringer(t *testing.T) {
 	}
 }
 
-func TestCAD_MarshalJSON(t *testing.T) {
+func TestCAD_MarshalJson(t *testing.T) {
 	tests := []struct {
 		Input    CAD
 		Expected string
@@ -435,37 +433,35 @@ func TestCAD_MarshalJSON(t *testing.T) {
 			Input: CAD{
 				cents: 1,
 			},
-			Expected: "{\"cents\":1}",
+			Expected: "$0.01\n",
 		},
 		{
 			Input: CAD{
 				cents: -7,
 			},
-			Expected: "{\"cents\":-7}",
+			Expected: "-$0.07\n",
 		},
 		{
 			Input: CAD{
 				cents: 0,
 			},
-			Expected: "{\"cents\":0}",
+			Expected: "$0.00\n",
 		},
 		{
 			Input: CAD{
 				cents: 1785,
 			},
-			Expected: "{\"cents\":1785}",
+			Expected: "$17.85\n",
 		},
 	}
 
 	for testNumber, test := range tests {
-		b, err := json.Marshal(test.Input)
-		if err != nil {
-			t.Error(err)
-			continue
-		}
-		out := string(b)
+		var b bytes.Buffer
+		fmt.Fprintln(&b, test.Input)
+		out := b.String()
 		if out != test.Expected {
 			t.Errorf("Test %d :  output is %q  but was expecting %s", testNumber, out, test.Expected)
 		}
+		b.Reset()
 	}
 }
