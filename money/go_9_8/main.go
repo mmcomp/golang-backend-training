@@ -132,9 +132,6 @@ func (receiver *CAD) Scan(src interface{}) error {
 			return err
 		}
 		return nil
-	case int64:
-		receiver.cents = casted
-		return nil
 	}
 	return errors.New("incompatible type for CAD")
 }
@@ -151,9 +148,9 @@ func main() {
 	}
 	var name string = "test"
 	var id int64
-	db.QueryRow("insert into money (name, cents) values ($1, $2)", name, money).Scan(&id)
+	db.QueryRow("insert into money2 (name, cents) values ($1, $2)", name, money).Scan(&id)
 
-	rows, err := db.Query("select * from money")
+	rows, err := db.Query("select * from money2")
 	if err != nil {
 		go_log.Errorf("Error Query : %s", err.Error())
 		return
@@ -171,10 +168,10 @@ func main() {
 }
 
 /*
-CREATE TABLE money (
+CREATE TABLE money2 (
 id BIGSERIAL PRIMARY KEY,
 name VARCHAR ( 50 ) NOT NULL,
-cents integer NOT NULL,
+cents money NOT NULL,
 when_created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 */
