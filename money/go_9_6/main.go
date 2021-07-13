@@ -69,20 +69,7 @@ func (receiver CAD) Sub(other CAD) CAD {
 }
 
 func (receiver CAD) GoString() string {
-	var sign int8 = 1
-	if receiver.cents < 0 {
-		sign = -1
-	}
-	receiver = receiver.Abs()
-	dollars, cents := receiver.CanonicalForm()
-	var centsStr string = fmt.Sprintf("%d", cents)
-	if cents < 10 {
-		centsStr = "0" + centsStr
-	}
-	result := fmt.Sprintf("$%d.%s", dollars, centsStr)
-	if sign < 0 {
-		result = "-" + result
-	}
+	result := fmt.Sprintf("main.cents(%d)", receiver.cents)
 	return result
 }
 
@@ -105,9 +92,8 @@ func (receiver CAD) String() string {
 }
 
 func (receiver CAD) MarshalJSON() ([]byte, error) {
-	jsonString := fmt.Sprintf("{\"cents\":%d}", receiver.cents)
-	result := []byte(jsonString)
-	return result, nil
+	result := receiver.String()
+	return []byte(result), nil
 }
 
 func main() {

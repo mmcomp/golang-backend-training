@@ -1,4 +1,10 @@
 github.com/mmcomp/go-log v0.0.0-20210703093350-0ceee54a309c h1:xocZyyEOwkUEIZiTbckDjK4OO0Ryk/46QmjvpAf1mzs=
 github.com/mmcomp/go-log v0.0.0-20210703093350-0ceee54a309c/go.mod h1:i8FWyCykjMADh+wE8ZDh56AJmRh2Sx7nHfsJs+39bzc=
+github.com/mmcomp/go-log v0.0.0-20210710040722-4ea978d70212 h1:AR86y7RJlvnYWteW2mDGPiqAfY+6kpliRE6GYP2r7PM=
+github.com/mmcomp/go-log v0.0.0-20210710040722-4ea978d70212/go.mod h1:i8FWyCykjMADh+wE8ZDh56AJmRh2Sx7nHfsJs+39bzc=
+github.com/mmcomp/go-log v0.0.0-20210712042833-0ebbef2e1667 h1:7kxdymJaHhX/swchYKN0zet/w73hIb6SzBn7cDM+qK8=
+github.com/mmcomp/go-log v0.0.0-20210712042833-0ebbef2e1667/go.mod h1:i8FWyCykjMADh+wE8ZDh56AJmRh2Sx7nHfsJs+39bzc=
+github.com/mmcomp/go-log v0.0.0-20210712083418-0837ed91b2ad h1:qlNrG6mwrRWVTyI/PvFjASzEMGqRO0frKUPZYyB09H0=
+github.com/mmcomp/go-log v0.0.0-20210712083418-0837ed91b2ad/go.mod h1:i8FWyCykjMADh+wE8ZDh56AJmRh2Sx7nHfsJs+39bzc=
 github.com/mmcomp/go_log v0.0.0-20210629122927-c6c950a17426 h1:Za0CR1O3QiYPVzE/tqm8FZHqLmfPBLomzeKKGhfTveI=
 github.com/mmcomp/go_log v0.0.0-20210629122927-c6c950a17426/go.mod h1:CMnBq1JQCDNaq/D6KdX6aosC227PAg6KhAOTaf3bACo=
